@@ -19,7 +19,7 @@ import java.time.Duration;
 
 public class Driver {
     // Create a private static WebDriver object
-    private static WebDriver driver;
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>() ;
 
     // To make a singleton driver, make the constructor private, so that no objects can be created from outside classes.
     private Driver() { // Constructor Driver
@@ -27,32 +27,34 @@ public class Driver {
 
     // Create the getDriver method to create and initiate the driver instance
     public static WebDriver getDriver() {
-        if (driver == null) {
+        if (driver.get() == null) {
             // This ensures that only one driver object is created.
             // If a driver was created before, 'driver' won't be null, and this if block won't execute.
             // It will return the existing (previously created) driver.
             switch (ConfigReader.getProperty("browser")) {
                 case "chrome":
-                    driver = new ChromeDriver();
+                    driver.set(new ChromeDriver());
                     break;
                 case "firefox":
-                    driver = new FirefoxDriver();
+                    driver.set(new FirefoxDriver());
                     break;
                 case "safari":
-                    driver = new SafariDriver();
+                    driver.set(new SafariDriver());
                     break;
             }
+            Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            Driver.getDriver().manage().window().maximize();
         }
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-        return driver;
+
+        return driver.get();
     }//getDriver ends here
 
     // create a closeDriver method to close the driver
     public static void closeDriver() {
         //   quit the driver id it is pointing chromedriver, firefoxdriver....
         if (driver != null) {
-            driver.quit();
+            Driver.getDriver().close();
+            Driver.getDriver().quit();
             driver = null;
         }
     }

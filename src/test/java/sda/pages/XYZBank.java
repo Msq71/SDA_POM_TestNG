@@ -50,14 +50,12 @@ public class XYZBank {
         Thread.sleep(700);
     }
 
+
     public void acceptAlert() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),(Duration.ofSeconds(3)));
-        wait.until(ExpectedConditions.alertIsPresent());
-
-        Alert alert = Driver.getDriver().switchTo().alert();
-        alert.accept();
-
-        Thread.sleep(1000);
+//        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),(Duration.ofSeconds(3)));
+//        wait.until(ExpectedConditions.alertIsPresent());
+        Driver.getDriver().switchTo().alert().accept();
+        Thread.sleep(200);
     }
 
     @FindBy(xpath = "//button[normalize-space()='Open Account']")
@@ -143,7 +141,7 @@ public class XYZBank {
     public void VerifyCustomersIsZero() {
         int rowNumbers = rows.size();
         System.out.println("row numbers = " + rowNumbers);
-        Assert.assertTrue(rowNumbers == 0);
+        Assert.assertEquals(rowNumbers, 0);
     }
 
 

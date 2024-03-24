@@ -1,11 +1,14 @@
 package sda.tests;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import sda.pages.XYZBank;
 import sda.utilities.Driver;
 
 import java.awt.dnd.DragGestureEvent;
+import java.time.Duration;
 
 public class C08_XYZBank {
     //Open 5 new  Accounts, deposit 100 USD and withdraw 100 USD from any account and delete all accounts you created.
@@ -23,17 +26,18 @@ public class C08_XYZBank {
 //  Click on "Add Customer" button
         xyzBank.addCustomerButton.click();
 //  Fill inputs and click on "Add Customer" submit button
-        Thread.sleep(1000);
         xyzBank.addCustomer();
 //  Accept alert
-        Thread.sleep(1000);
         xyzBank.acceptAlert();
-        Thread.sleep(1000);
 //  Add 4 more customers
         xyzBank.addCustomer();
+        xyzBank.acceptAlert();
         xyzBank.addCustomer();
+        xyzBank.acceptAlert();
         xyzBank.addCustomer();
+        xyzBank.acceptAlert();
         xyzBank.addCustomer();
+        xyzBank.acceptAlert();
 //  Click on "Open Account" button
         xyzBank.openAccount.click();
 //  Click on "Customer" dropdown
@@ -43,14 +47,18 @@ public class C08_XYZBank {
 //  Click on "Currency" dropdown
 //  Select "Dollar"
 //  Click on "Process" button
-        xyzBank.openAccount(0);
+        xyzBank.openAccount(1);
 //  Accept alert
         xyzBank.acceptAlert();
 //  Open 4 more accounts
-        xyzBank.openAccount(1);
         xyzBank.openAccount(2);
+        xyzBank.acceptAlert();
         xyzBank.openAccount(3);
+        xyzBank.acceptAlert();
         xyzBank.openAccount(4);
+        xyzBank.acceptAlert();
+        xyzBank.openAccount(5);
+        xyzBank.acceptAlert();
 //  Click on "Customers" button
         xyzBank.customersButton.click();
 
@@ -79,10 +87,14 @@ public class C08_XYZBank {
 //  Click on "Withdrawal" button
         xyzBank.withdrawalButton.click();
 //  Type 100 into "Amount to be Withdrawn" input
+        Thread.sleep(1000);
         xyzBank.amountField.sendKeys("100");
 //  Click on "Withdraw"(Submit) button
+        Thread.sleep(1000);
         xyzBank.amountSubmitButton.click();
 //  Assert that "Transaction  Successful" is displayed
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(2));
+        wait.until(ExpectedConditions.visibilityOf(xyzBank.withdrawalMsg));
         Assert.assertTrue(xyzBank.withdrawalMsg.isDisplayed());
 //  Click on "Logout" button
         xyzBank.logOutButton.click();
@@ -97,7 +109,7 @@ public class C08_XYZBank {
 //  Count table row numbers
         System.out.println("row numbers = " + xyzBank.rows.size());
 //  Assert that number of customers is 0
-        Assert.assertTrue(xyzBank.rows.isEmpty());
+        xyzBank.VerifyCustomersIsZero();
     }
 
 }

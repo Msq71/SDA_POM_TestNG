@@ -17,9 +17,9 @@ public class SearchResultPage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
-    @FindBy(xpath = "//li[2]/div[1]/div[2]/a[1]/div[1]/span[1]")
+    @FindBy(xpath = "//ul//li[1]/div[1]/div[2]/a[1]/div[1]/span[1]")
     public WebElement firstResult;
-
+    // //ul//li[1]/div[1]/div[2]/a[1]/div[1]/span[1]
     // first in driver: //ul/li[1]/div/div[2]/a/div/span
     // Add the first product in the search results to the cart
     public void clickOnFirstProduct() {

@@ -49,18 +49,20 @@ public class CartPage {
         select.selectByIndex(--q);
     }
 
-    public void VerifyTotalAmount() throws InterruptedException {
-        String price = productPrice.getText().substring(4);
-        float initialPrice = Float.parseFloat(price);
+    public float getInitialPrice(){
+        return Float.parseFloat(productPrice.getText().substring(4));
+    }
+    public void VerifyTotalAmount(float initialPrice) throws InterruptedException {
         // Verify the total amount in the cart should be calculated as unit productPrice * quantity
         float totalAmount = getTextOfSelectedOption() * initialPrice;
         float actualAmount = Float.parseFloat(subtotal.getText().substring(4));
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         Assert.assertEquals(actualAmount, totalAmount);
         System.out.println("initialPrice = " + initialPrice);
         System.out.println("totalAmount = " + totalAmount);
         System.out.println("actualAmount = " + actualAmount);
     }
+
 
 
 }

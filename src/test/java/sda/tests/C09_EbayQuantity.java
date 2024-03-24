@@ -50,12 +50,15 @@ public class C09_EbayQuantity {
         //Add the first product in the search results to the cart
         productPage.addToCart();
         // Increase the quantity of the purchased product to {quantity}
+        float initalPrice = cartPage.getInitialPrice();
+        cartPage.VerifyTotalAmount(initalPrice);
         cartPage.chooseQuantity(3);
+        Thread.sleep(2000);
         Driver.getDriver().navigate().refresh();
         Thread.sleep(1000);
         System.out.println("cartPage.getTextOfSelectedOption() = " + cartPage.getTextOfSelectedOption());
         // Verify the total amount in the cart should be calculated as unit productPrice * quantity
-        cartPage.VerifyTotalAmount();
+        cartPage.VerifyTotalAmount(initalPrice);
 
 
     }
